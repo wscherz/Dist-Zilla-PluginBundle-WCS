@@ -9,4 +9,4 @@ my @subs = ();
 
 BEGIN { use_ok( 'Dist::Zilla::PluginBundle::WCS', @subs ) || BAIL_OUT($@); }
 
-diag("Testing Dist-Zilla-PluginBundle-WCS $::VERSION, Perl $], $^X");
+diag("Testing Dist-Zilla-PluginBundle-WCS $Dist::Zilla::PluginBundle::WCS::VERSION, Perl $], $^X");
