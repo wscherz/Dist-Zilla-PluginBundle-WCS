@@ -1,0 +1,7 @@
+.build
+Dist-Zilla-PluginBundle-WCS-*
+*~
+*.log
+*.swp
+*.exe
+**/tags
