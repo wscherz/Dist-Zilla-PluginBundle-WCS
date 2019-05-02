@@ -17,8 +17,6 @@ with
 This is the plugin bundle that WCS uses.  It is equivalent to:
 
   [Git::NextVersion]
-  version_regexp = '^([0-9]+\.[0-9]+)$'
-
   [License]
   [CopyFilesFromBuild]
   copy = LICENSE
@@ -35,7 +33,6 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   format = %-9v %{yyyy-MM-dd}d
 
   [@Git]
-  tag_format = '%v'
   remotes_must_exist = 0
   push_to = 'origin :'
   push_to = 'backup :'
@@ -94,11 +91,7 @@ sub configure {
     my ($self) = @_;
 
     $self->add_plugins(
-        [
-            'Git::NextVersion' => {
-                version_regexp => '^([0-9]+\.[0-9]+)$',
-            }
-        ],
+        'Git::NextVersion',
         'License',
         [ CopyFilesFromBuild => { copy             => 'LICENSE', } ],
         [ GatherDir          => { exclude_filename => 'LICENSE', } ],
@@ -118,7 +111,6 @@ sub configure {
 
     $self->add_bundle(
         '@Git' => {
-            tag_format         => '%v',
             remotes_must_exist => 0,
             push_to            => [ 'origin', 'backup', ]
         }
