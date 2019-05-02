@@ -120,7 +120,7 @@ sub configure {
         '@Git' => {
             tag_format         => '%v',
             remotes_must_exist => 0,
-            push_to            => [ 'origin :', 'backup :', ]
+            push_to            => [ 'origin', 'backup', ]
         }
     );
 
@@ -135,7 +135,7 @@ sub configure {
         qw/
           InstallGuide
           Git::Contributors
-          GithebMeta
+          GithubMeta
           MetaConfig
           MetaJSON
           PodWeaver
