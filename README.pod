@@ -8,7 +8,7 @@ Dist::Zilla::PluginBundle::WCS - WCS distribution build
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 DESCRIPTION
 
@@ -19,7 +19,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   [CopyFilesFromBuild]
   copy = LICENSE
 
-  [GatherDir]
+  [Git::GatherDir]
   exclude_filename = LICENSE
 
   [PkgVersion]
@@ -32,8 +32,8 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
 
   [@Git]
   remotes_must_exist = 0
-  push_to = 'origin :'
-  push_to = 'backup :'
+  push_to = 'origin'
+  push_to = 'backup'
 
   [@Filter]
   -bundle = @Basic
@@ -46,6 +46,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   [MetaConfig]
   [MetaYAML]
   [MetaJSON]
+  [MinimumPerlFast]
   [PodWeaver]
   [ReadmeAnyFromPod
   type = pod
@@ -53,12 +54,15 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   location = root
 
   [AutoPrereqs]
+  [TravisYML]
+  build_release = /^release\/.*/
+
   [MetaTests]
   [Test::ChangesHasContent]
   [Test::NoTabs]
   [Test::EOL]
   trailing_whitespace = 1
-  all_resons = 1
+  all_reasons = 1
 
   [Test::Compile]
   [PodSyntaxTests]
@@ -69,7 +73,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   [Test::Kwalitee]
   [Git::CommitBuild]
   branch =
-  release_branch = release
+  release_branch = release/%b
   release_message = Build release of %v (on %b)
 
   [TestRelease]
@@ -89,5 +93,11 @@ This software is copyright (c) 2019 by William C Scherz III.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
+
+=head1 CONTRIBUTOR
+
+=for stopwords Mohammad S Anwar
+
+Mohammad S Anwar <mohammad.anwar@yahoo.com>
 
 =cut

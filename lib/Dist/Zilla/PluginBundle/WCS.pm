@@ -21,7 +21,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   [CopyFilesFromBuild]
   copy = LICENSE
 
-  [GatherDir]
+  [Git::GatherDir]
   exclude_filename = LICENSE
 
   [PkgVersion]
@@ -34,8 +34,8 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
 
   [@Git]
   remotes_must_exist = 0
-  push_to = 'origin :'
-  push_to = 'backup :'
+  push_to = 'origin'
+  push_to = 'backup'
 
   [@Filter]
   -bundle = @Basic
@@ -48,6 +48,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   [MetaConfig]
   [MetaYAML]
   [MetaJSON]
+  [MinimumPerlFast]
   [PodWeaver]
   [ReadmeAnyFromPod
   type = pod
@@ -55,12 +56,15 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   location = root
 
   [AutoPrereqs]
+  [TravisYML]
+  build_release = /^release\/.*/
+
   [MetaTests]
   [Test::ChangesHasContent]
   [Test::NoTabs]
   [Test::EOL]
   trailing_whitespace = 1
-  all_resons = 1
+  all_reasons = 1
 
   [Test::Compile]
   [PodSyntaxTests]
@@ -71,7 +75,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   [Test::Kwalitee]
   [Git::CommitBuild]
   branch =
-  release_branch = release
+  release_branch = release/%b
   release_message = Build release of %v (on %b)
 
   [TestRelease]
@@ -94,7 +98,7 @@ sub configure {
         'Git::NextVersion',
         'License',
         [ CopyFilesFromBuild => { copy             => 'LICENSE', } ],
-        [ GatherDir          => { exclude_filename => 'LICENSE', } ],
+        [ 'Git::GatherDir'   => { exclude_filename => 'LICENSE', } ],
         [
             PkgVersion => {
                 die_on_existing_version => 1,
@@ -130,6 +134,7 @@ sub configure {
           GithubMeta
           MetaConfig
           MetaJSON
+          MinimumPerlFast
           PodWeaver
           /,
         [
@@ -142,6 +147,13 @@ sub configure {
         qw/
           TaskWeaver
           AutoPrereqs
+          /,
+        [
+            TravisYML => {
+                build_branch => '/^release\/.*/'
+            }
+        ],
+        qw/
           MetaTests
           Test::ChangeHasContent
           Test::NoTabs
@@ -164,7 +176,7 @@ sub configure {
         [
             'Git::CommitBuild' => {
                 branch          => '',
-                release_branch  => 'release',
+                release_branch  => 'release/%b',
                 release_message => 'Build release of %v (on %b)'
             }
         ],
