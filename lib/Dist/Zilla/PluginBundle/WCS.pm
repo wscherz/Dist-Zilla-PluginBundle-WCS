@@ -51,8 +51,8 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   [MinimumPerlFast]
   [PodWeaver]
   [ReadmeAnyFromPod
-  type = pod
-  filename = README.pod
+  type = markdown
+  filename = README.md
   location = root
 
   [AutoPrereqs]
@@ -60,6 +60,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   build_release = /^release\/.*/
 
   [MetaTests]
+  [TravisCI::StatusBadge]
   [Test::ChangesHasContent]
   [Test::NoTabs]
   [Test::EOL]
@@ -139,8 +140,8 @@ sub configure {
           /,
         [
             ReadmeAnyFromPod => {
-                type     => 'pod',
-                filename => 'README.pod',
+                type     => 'markdown',
+                filename => 'README.md',
                 location => 'root',
             }
         ],
@@ -155,6 +156,7 @@ sub configure {
         ],
         qw/
           MetaTests
+          TravisCI::StatusBadge
           Test::ChangeHasContent
           Test::NoTabs
           /,
