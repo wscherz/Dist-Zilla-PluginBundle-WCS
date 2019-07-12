@@ -1,6 +1,8 @@
 use strict;
 use warnings;
 
+use 5.014;
+
 package Dist::Zilla::PluginBundle::WCS;
 
 # ABSTRACT: WCS distribution build
@@ -81,10 +83,6 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
 
   [TestRelease]
   [ConfirmRelease]
-
-=cut
-
-=func configure
 
 =cut
 
@@ -188,6 +186,14 @@ sub configure {
           /,
     );
 }
+
+=begin Pod::Coverage
+
+  configure
+
+=end Pod::Coverage
+
+=cut
 
 __PACKAGE__->meta->make_immutable;
 no Moose;

@@ -78,10 +78,6 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
     [TestRelease]
     [ConfirmRelease]
 
-# FUNCTIONS
-
-## configure
-
 # AUTHOR
 
 William C Scherz III <wcs@cpan.org>
@@ -93,6 +89,7 @@ This software is copyright (c) 2019 by William C Scherz III.
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
-# CONTRIBUTOR
+# CONTRIBUTORS
 
-Mohammad S Anwar <mohammad.anwar@yahoo.com>
+- Mohammad S Anwar <mohammad.anwar@yahoo.com>
+- William Scherz <wscherz@users.noreply.github.com>
