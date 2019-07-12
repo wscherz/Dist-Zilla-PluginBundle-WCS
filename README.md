@@ -89,7 +89,6 @@ This software is copyright (c) 2019 by William C Scherz III.
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
-# CONTRIBUTORS
+# CONTRIBUTOR
 
-- Mohammad S Anwar <mohammad.anwar@yahoo.com>
-- William Scherz <wscherz@users.noreply.github.com>
+Mohammad S Anwar <mohammad.anwar@yahoo.com>
