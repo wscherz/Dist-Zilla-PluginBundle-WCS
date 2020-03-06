@@ -172,7 +172,7 @@ sub configure {
         qw/
           MetaTests
           TravisCI::StatusBadge
-          Test::ChangeHasContent
+          Test::ChangesHasContent
           Test::NoTabs
           /,
         [
