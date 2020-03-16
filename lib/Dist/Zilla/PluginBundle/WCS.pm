@@ -36,6 +36,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
 
   [@Git]
   remotes_must_exist = 0
+  allow_dirty = .travis.yml
   push_to = 'origin master:master'
   push_to = 'origin release/master:release/master
   push_to = 'backup master:master'
@@ -120,6 +121,7 @@ sub configure {
     $self->add_bundle(
         '@Git' => {
             remotes_must_exist => 0,
+			allow_dirty        => ['.travis.yml'],
             push_to            => [ 'origin', 'backup', ]
         }
     );

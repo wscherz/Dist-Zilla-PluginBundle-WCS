@@ -22,24 +22,6 @@ before_install:
 install:
    - export OLD_CPANM_OPT=$PERL_CPANM_OPT
    - export PERL_CPANM_OPT='--mirror http://cpan.metacpan.org/ --mirror http://search.cpan.org/CPAN' $PERL_CPANM_OPT
-   - cpanm --verbose RJBS/
-   - cpanm --verbose RWSTAUNER/
-   - cpanm --verbose JQUELIN/
-   - cpanm --verbose RWSTAUNER/
-   - cpanm --verbose STEVAN/
-   - cpanm --verbose RJBS/
-   - cpanm --verbose RJBS/
-   - cpanm --verbose KEEDI/
-   - cpanm --verbose BARBIE/
-   - cpanm --verbose --installdeps RJBS/
-   - cpanm --verbose --installdeps RWSTAUNER/
-   - cpanm --verbose --installdeps JQUELIN/
-   - cpanm --verbose --installdeps RWSTAUNER/
-   - cpanm --verbose --installdeps STEVAN/
-   - cpanm --verbose --installdeps RJBS/
-   - cpanm --verbose --installdeps RJBS/
-   - cpanm --verbose --installdeps KEEDI/
-   - cpanm --verbose --installdeps BARBIE/
    - export PERL_CPANM_OPT=$OLD_CPANM_OPT
 script:
    - dzil smoke --release --author
