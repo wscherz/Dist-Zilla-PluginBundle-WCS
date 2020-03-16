@@ -69,7 +69,6 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
 
   [MetaTests]
   [TravisCI::StatusBadge]
-  [Test::ChangesHasContent]
   [Test::NoTabs]
   [Test::EOL]
   trailing_whitespace = 1
@@ -172,7 +171,6 @@ sub configure {
         qw/
           MetaTests
           TravisCI::StatusBadge
-          Test::ChangesHasContent
           Test::NoTabs
           /,
         [
