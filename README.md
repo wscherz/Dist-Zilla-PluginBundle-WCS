@@ -30,6 +30,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
 
     [@Git]
     remotes_must_exist = 0
+    allow_dirty = .travis.yml
     push_to = 'origin master:master'
     push_to = 'origin release/master:release/master
     push_to = 'backup master:master'
@@ -76,7 +77,6 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
     [Test::Perl::Critic]
     [Test::Kwalitee]
     [Git::CommitBuild]
-    branch =
     release_branch = release/%b
     release_message = Build release of %v (on %b)
 

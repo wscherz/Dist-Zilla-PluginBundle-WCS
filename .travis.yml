@@ -10,18 +10,75 @@ perl:
    - '5.18'
    - '5.16'
    - '5.14'
+env:
+   - BUILD=0
+   - BUILD=1
 matrix:
    fast_finish: true
 before_install:
-   - git config --global user.name "TravisCI"
-   - git config --global user.email $HOSTNAME":not-for-mail@travis-ci.org"
-   - cpanm --quiet --notest Pod::Weaver::Section::Contributors
-   - cpanm --quiet --notest Pod::Elemental::Transformer::List
-   - cpanm --quiet --notest Pod::Coverage::TrustPod
-   - cpanm --quiet --notest Test::CPAN::Meta
+   - 'if [[ $BUILD == 1 && ! -d .build/testing ]]; then unset BUILD; fi'
+   - export AUTOMATED_TESTING=1 NONINTERACTIVE_TESTING=1 HARNESS_OPTIONS=j10:c HARNESS_TIMER=1
+   - git clone git://github.com/haarg/perl-travis-helper
+   - source perl-travis-helper/init
+   - build-perl
+   - perl -V
+   - 'if [[ $BUILD == 0 ]]; then git config --global user.name "TravisCI"; fi'
+   - 'if [[ $BUILD == 0 ]]; then git config --global user.email $HOSTNAME":not-for-mail@travis-ci.org"; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest Pod::Weaver::Section::Contributors; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest Pod::Elemental::Transformer::List; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest Pod::Coverage::TrustPod; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest Test::CPAN::Meta; fi'
+   - 'if [[ $BUILD == 1 ]]; then cd .build/testing; fi'
+   - 'if [[ $BUILD == 1 ]]; then export AUTHOR_TESTING=0; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --quiet --notest Pod::Weaver::Section::Contributors; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --quiet --notest Pod::Elemental::Transformer::List; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --quiet --notest Pod::Coverage::TrustPod; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --quiet --notest Test::CPAN::Meta; fi'
 install:
-   - export OLD_CPANM_OPT=$PERL_CPANM_OPT
-   - export PERL_CPANM_OPT='--mirror http://cpan.metacpan.org/ --mirror http://search.cpan.org/CPAN' $PERL_CPANM_OPT
-   - export PERL_CPANM_OPT=$OLD_CPANM_OPT
+   - 'if [[ $BUILD == 0 ]]; then export OLD_CPANM_OPT=$PERL_CPANM_OPT; fi'
+   - "if [[ $BUILD == 0 ]]; then export PERL_CPANM_OPT='--mirror http://cpan.metacpan.org/ --mirror http://search.cpan.org/CPAN' $PERL_CPANM_OPT; fi"
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose RJBS/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose RWSTAUNER/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose JQUELIN/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose RWSTAUNER/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose STEVAN/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose RJBS/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose RJBS/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose KEEDI/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose BARBIE/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps RJBS/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps RWSTAUNER/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps JQUELIN/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps RWSTAUNER/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps STEVAN/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps RJBS/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps RJBS/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps KEEDI/; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps BARBIE/; fi'
+   - 'if [[ $BUILD == 0 ]]; then export PERL_CPANM_OPT=$OLD_CPANM_OPT; fi'
+   - 'if [[ $BUILD == 1 ]]; then export OLD_CPANM_OPT=$PERL_CPANM_OPT; fi'
+   - "if [[ $BUILD == 1 ]]; then export PERL_CPANM_OPT='--mirror http://cpan.metacpan.org/ --mirror http://search.cpan.org/CPAN' $PERL_CPANM_OPT; fi"
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose RJBS/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose RWSTAUNER/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose JQUELIN/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose RWSTAUNER/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose STEVAN/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose RJBS/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose RJBS/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose KEEDI/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose BARBIE/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps RJBS/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps RWSTAUNER/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps JQUELIN/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps RWSTAUNER/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps STEVAN/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps RJBS/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps RJBS/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps KEEDI/; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps BARBIE/; fi'
+   - 'if [[ $BUILD == 1 ]]; then export PERL_CPANM_OPT=$OLD_CPANM_OPT; fi'
 script:
-   - dzil smoke --release --author
+   - 'if [[ $BUILD == 0 ]]; then dzil smoke --release --author; fi'
+   - 'if [[ $BUILD == 1 && -f Makefile.PL ]]; then perl Makefile.PL && make test;    fi'
+   - 'if [[ $BUILD == 1 && -f Build.PL    ]]; then perl Build.PL    && ./Build test; fi'
+   - 'if [[ $BUILD == 1 && ! -f Makefile.PL && ! -f Build.PL ]]; then  make test;    fi'
