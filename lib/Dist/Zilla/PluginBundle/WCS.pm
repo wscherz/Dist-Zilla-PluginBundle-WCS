@@ -87,6 +87,9 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   release_message = Build release of %v (on %b)
 
   [TestRelease]
+  [Travis::TestRelease]
+  create_builddir = 1
+
   [ConfirmRelease]
 
 =cut
@@ -120,7 +123,7 @@ sub configure {
     $self->add_bundle(
         '@Git' => {
             remotes_must_exist => 0,
-			allow_dirty        => ['.travis.yml'],
+            allow_dirty        => ['.travis.yml'],
             push_to            => [ 'origin', 'backup', ]
         }
     );
@@ -155,9 +158,9 @@ sub configure {
           /,
         [
             TravisYML => {
-				support_builddir => '1',
+                support_builddir    => '1',
                 build_branch        => '/^release\/.*/',
-				dzil_branch => '/release_testing\/.*/',
+                dzil_branch         => '/release_testing\/.*/',
                 post_before_install => [
                     'cpanm --quiet --notest Pod::Weaver::Section::Contributors',
                     'cpanm --quiet --notest Pod::Elemental::Transformer::List',
@@ -197,12 +200,15 @@ sub configure {
                 release_message => 'Build release of %v (on %b)'
             }
         ],
-		['Travis::TestRelease' => {
-				create_builddir => '1',
-			}
-		],
         qw/
           TestRelease
+          /,
+        [
+            'Travis::TestRelease' => {
+                create_builddir => '1',
+            }
+        ],
+        qw/
           ConfirmRelease
           /,
     );

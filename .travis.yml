@@ -24,23 +24,21 @@ before_install:
    - perl -V
    - 'if [[ $BUILD == 0 ]]; then git config --global user.name "TravisCI"; fi'
    - 'if [[ $BUILD == 0 ]]; then git config --global user.email $HOSTNAME":not-for-mail@travis-ci.org"; fi'
-   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest Pod::Weaver::Section::Contributors; fi'
-   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest Pod::Elemental::Transformer::List; fi'
-   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest Pod::Coverage::TrustPod; fi'
-   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest Test::CPAN::Meta; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps --notest Pod::Weaver::Section::Contributors; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps --notest Pod::Elemental::Transformer::List; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps --notest Pod::Coverage::TrustPod; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --verbose --installdeps --notest Test::CPAN::Meta; fi'
    - 'if [[ $BUILD == 1 ]]; then cd .build/testing; fi'
    - 'if [[ $BUILD == 1 ]]; then export AUTHOR_TESTING=0; fi'
-   - 'if [[ $BUILD == 1 ]]; then cpanm --quiet --notest Pod::Weaver::Section::Contributors; fi'
-   - 'if [[ $BUILD == 1 ]]; then cpanm --quiet --notest Pod::Elemental::Transformer::List; fi'
-   - 'if [[ $BUILD == 1 ]]; then cpanm --quiet --notest Pod::Coverage::TrustPod; fi'
-   - 'if [[ $BUILD == 1 ]]; then cpanm --quiet --notest Test::CPAN::Meta; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps --notest Pod::Weaver::Section::Contributors; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps --notest Pod::Elemental::Transformer::List; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps --notest Pod::Coverage::TrustPod; fi'
+   - 'if [[ $BUILD == 1 ]]; then cpanm --verbose --installdeps --notest Test::CPAN::Meta; fi'
 install:
-   - 'if [[ $BUILD == 0 ]]; then export OLD_CPANM_OPT=$PERL_CPANM_OPT; fi'
-   - "if [[ $BUILD == 0 ]]; then export PERL_CPANM_OPT='--mirror http://cpan.metacpan.org/ --mirror http://search.cpan.org/CPAN' $PERL_CPANM_OPT; fi"
-    'if [[ $BUILD == 0 ]]; then export PERL_CPANM_OPT=$OLD_CPANM_OPT; fi'
-   - 'if [[ $BUILD == 1 ]]; then export OLD_CPANM_OPT=$PERL_CPANM_OPT; fi'
-   - "if [[ $BUILD == 1 ]]; then export PERL_CPANM_OPT='--mirror http://cpan.metacpan.org/ --mirror http://search.cpan.org/CPAN' $PERL_CPANM_OPT; fi"
-  - 'if [[ $BUILD == 1 ]]; then export PERL_CPANM_OPT=$OLD_CPANM_OPT; fi'
+   - 'if [[ $BUILD == 0 ]]; then cpanm --quiet --notest --skip-satisfied Dist::Zilla; fi'
+   - "if [[ $BUILD == 0 ]]; then dzil authordeps          --missing | grep -vP '[^\\w:]' | xargs -n 5 -P 10 cpanm --quiet --notest; fi"
+   - "if [[ $BUILD == 0 ]]; then dzil listdeps   --author --missing | grep -vP '[^\\w:]' | cpanm --verbose; fi"
+   - 'if [[ $BUILD == 1 ]]; then cpanm --installdeps --verbose  .; fi'
 script:
    - 'if [[ $BUILD == 0 ]]; then dzil smoke --release --author; fi'
    - 'if [[ $BUILD == 1 && -f Makefile.PL ]]; then perl Makefile.PL && make test;    fi'

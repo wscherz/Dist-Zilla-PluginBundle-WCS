@@ -81,6 +81,9 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
     release_message = Build release of %v (on %b)
 
     [TestRelease]
+    [Travis::TestRelease]
+    create_builddir = 1
+
     [ConfirmRelease]
 
 # AUTHOR
