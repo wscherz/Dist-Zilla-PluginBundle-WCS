@@ -36,7 +36,6 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
 
   [@Git]
   remotes_must_exist = 0
-  allow_dirty = .travis.yml
   push_to = 'origin master:master'
   push_to = 'origin release/master:release/master
   push_to = 'backup master:master'
@@ -59,17 +58,7 @@ This is the plugin bundle that WCS uses.  It is equivalent to:
   location = root
 
   [AutoPrereqs]
-  [TravisYML]
-  build_release = /^release\/.*/
-  post_before_install = cpanm --quiet --notest Pod::Weaver::Section::Contributors
-  post_before_install = cpanm --quiet --notest Pod::Elemental::Transformer::List
-  post_before_install = cpanm --quiet --notest Pod::Coverage::TrustPod
-  post_before_install = cpanm --quiet --notest Test::CPAN::Meta
-  perl_version = 5.30 5.28 5.26 5.24 5.22 5.20 5.18 5.16 5.14
-  mvdt = 1
-
   [MetaTests]
-  [TravisCI::StatusBadge]
   [Test::NoTabs]
   [Test::EOL]
   trailing_whitespace = 1
@@ -121,7 +110,6 @@ sub configure {
     $self->add_bundle(
         '@Git' => {
             remotes_must_exist => 0,
-			allow_dirty        => ['.travis.yml'],
             push_to            => [ 'origin', 'backup', ]
         }
     );
@@ -154,25 +142,9 @@ sub configure {
           TaskWeaver
           AutoPrereqs
           /,
-        [
-            TravisYML => {
-                build_branch        => '/^release\/.*/',
-                post_before_install => [
-                    'cpanm --quiet --notest Pod::Weaver::Section::Contributors',
-                    'cpanm --quiet --notest Pod::Elemental::Transformer::List',
-                    'cpanm --quiet --notest Pod::Coverage::TrustPod',
-                    'cpanm --quiet --notest Test::CPAN::Meta'
-                ],
-                perl_version => [
-                    '5.30', '5.28', '5.26', '5.24', '5.22', '5.20',
-                    '5.18', '5.16', '5.14'
-                ],
-                mvdt => '1',
-            }
-        ],
+        ,
         qw/
           MetaTests
-          TravisCI::StatusBadge
           Test::NoTabs
           /,
         [
